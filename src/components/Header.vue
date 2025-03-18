@@ -128,4 +128,10 @@ onBeforeUnmount(() => {
   color: white !important;
   text-shadow: 0px 0px 5px rgb(0, 187, 201);
 }
+
+@media (max-width: 576px) {
+  .nav-hide {
+    transform: translateY(-93%);
+  }
+}
 </style>

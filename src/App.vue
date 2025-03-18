@@ -14,7 +14,7 @@
       </div>
     </section>
 
-    <section class="row separador w-100 mx-md-4" id="redes">
+    <section class="row separador w-100 mx-md-4 content" id="redes">
       <div class="col-md-7 h-100 mb-md-1 mb-5 ms-md-0 ms-2">
         <div
           class="justify-content-center d-flex align-content-center h-75 pt-5"
@@ -110,7 +110,7 @@ const copyEmail = () => {
 <style scoped>
 .main-content {
   min-height: 100vh;
-  padding-top: 17rem;
+  padding-top: 14rem;
 }
 .img-protifolio {
   border-radius: 380px;
@@ -205,17 +205,16 @@ const copyEmail = () => {
     width: 60%;
     height: 90%;
   }
+
+  .main-content {
+    padding-top: 10rem;
+  }
 }
 
 @media (max-width: 576px) {
   .nav-bar-theme {
     width: 100% !important;
   }
-
-  section {
-    padding-top: 6rem;
-  }
-
   .img-protifolio {
     width: 60%;
   }

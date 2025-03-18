@@ -24,3 +24,24 @@ html {
 
     padding-top: 3rem;
 }
+
+
+@media (max-width: 768px) {
+    .separador {
+        margin-top: 1rem;
+    }
+
+    .content {
+        padding-top: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .separador {
+        margin-top: 2rem;
+    }
+
+    .content {
+        padding-top: 7rem;
+    }
+}
