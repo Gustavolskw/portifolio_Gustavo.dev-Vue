@@ -100,7 +100,7 @@ const emailCopied = ref(false);
 // Função para copiar o email (se necessário)
 const copyEmail = () => {
   // Copiar o email para a área de transferência
-  navigator.clipboard.writeText("gustavolschmidt13@gmial.com").then(() => {
+  navigator.clipboard.writeText("gustavolschmidt13@gmail.com").then(() => {
     emailCopied.value = true;
     setTimeout(() => (emailCopied.value = false), 2000); // Esconde a mensagem após 2 segundos
   });
