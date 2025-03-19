@@ -69,8 +69,8 @@
 
     <Tecnologias />
     <Repositorios />
-    <Footer />
   </div>
+  <Footer />
 </template>
 
 <script setup>
