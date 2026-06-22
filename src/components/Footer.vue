@@ -1,43 +1,127 @@
 <template>
-  <footer
-    class="pt-5 pb-2 mt-5 align-items-end align-content-end bg-gradient separador"
-  >
-    <p class="text-center"><span class="fw-bold">Github:</span>Gustavolskw</p>
-    <div class="d-flex justify-content-center">
-      <div class="row justify-content-center">
-        <p class="text-center">Tecnologias usadas no Portifólio</p>
-        <div class="col-2 d-flex justify-content-center">
-          <img class="icon-footer" src="/assets/languages/Vue.png" alt="" />
-        </div>
-        <div class="col-2 d-flex justify-content-center">
-          <img class="icon-footer" src="/assets/languages/js.png" alt="" />
-        </div>
-        <div class="col-2 d-flex justify-content-center">
-          <img class="icon-footer" src="/assets/languages/css.png" alt="" />
-        </div>
-        <div class="col-2 d-flex justify-content-center">
-          <img
-            class="icon-footer"
-            src="/assets/languages/bootstrap.png"
-            alt=""
-          />
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <span class="footer-label">Github</span>
+        <a href="https://github.com/Gustavolskw" target="_blank" rel="noopener noreferrer" class="footer-link">
+          Gustavolskw
+        </a>
+      </div>
+
+      <div class="footer-divider"></div>
+
+      <div class="footer-section">
+        <span class="footer-label">Tecnologias do Portfólio</span>
+        <div class="footer-techs">
+          <img class="footer-tech-icon" src="/assets/languages/Vue.png" alt="Vue" />
+          <img class="footer-tech-icon" src="/assets/languages/js.png" alt="JavaScript" />
+          <img class="footer-tech-icon" src="/assets/languages/css.png" alt="CSS" />
+          <img class="footer-tech-icon" src="/assets/languages/bootstrap.png" alt="Bootstrap" />
         </div>
       </div>
     </div>
-    <p class="text-center fw-bolder mt-5">
-      &copy; Feito por Gustavo Luis Schmidt
-    </p>
+
+    <div class="footer-bottom">
+      <p>&copy; {{ currentYear }} Gustavo Luis Schmidt. Todos os direitos reservados.</p>
+    </div>
   </footer>
 </template>
 
-<style>
-.icon-footer {
-  width: 40%;
+<script setup>
+const currentYear = new Date().getFullYear();
+</script>
+
+<style scoped>
+.footer {
+  margin-top: 6rem;
+  padding: 3rem 2rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(26, 26, 46, 0.9);
+  backdrop-filter: blur(20px);
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.footer-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--accent-color);
+}
+
+.footer-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.footer-techs {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.footer-tech-icon {
+  width: 28px;
+  height: 28px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.footer-tech-icon:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.footer-bottom {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+
+.footer-bottom p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
 }
 
 @media (max-width: 576px) {
-  .icon-footer {
-    width: 75%;
+  .footer-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .footer-divider {
+    width: 40px;
+    height: 1px;
   }
 }
 </style>

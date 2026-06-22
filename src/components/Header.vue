@@ -1,101 +1,75 @@
 <template>
-  <div class="d-flex justify-content-center">
-    <nav
-      class="navbar navbar-expand-lg nav-bar-theme py-5 d-flex flex-column"
-      ref="navBar"
-    >
-      <div class="container-fluid justify-content-center">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div
-          class="collapse navbar-collapse justify-content-center"
-          id="navbarNav"
-        >
-          <div class="d-flex flex-column">
-            <div class="d-flex align-items-center align-content-center gap-3">
-              <i
-                class="bi bi-code-slash fs-2 fw-bold text-white"
-                style="text-shadow: 0px 0px 5px rgb(0, 187, 201)"
-              ></i>
-              <a class="nav-link fs-1 fw-bold" href="#">Gustavo Luis Schmidt</a>
-            </div>
-            <ul class="navbar-nav mb-2 mb-lg-0 justify-content-center gap-2">
-              <li class="nav-item align-items-center align-content-center">
-                <a class="nav-link" aria-current="page" href="#redes">Redes</a>
-              </li>
-              <li class="nav-item align-items-center align-content-center">
-                <a class="nav-link" aria-current="page" href="#tecnologias"
-                  >Linguagens</a
-                >
-              </li>
-              <li class="nav-item align-items-center align-content-center">
-                <a class="nav-link" aria-current="page" href="#projetos"
-                  >Projetos</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
+  <header class="header" ref="header">
+    <nav class="nav-container">
+      <a href="#" class="logo">
+        <i class="bi bi-code-slash logo-icon"></i>
+        <span class="logo-text">Gustavo Luis Schmidt</span>
+      </a>
+
+      <div class="nav-links" ref="navLinks">
+        <a href="#redes" class="nav-link-item">Inicio</a>
+        <a href="#tecnologias" class="nav-link-item">Tecnologias</a>
+        <a href="#projetos" class="nav-link-item">Projetos</a>
       </div>
-      <div>
-        <button
-          class="btn text-white position-absolute d-none"
-          @click="toggleNav"
-          ref="btnHamb"
-        >
-          <i class="bi bi-justify fs-2 hamburger-nav rounded"></i>
-        </button>
-      </div>
+
+      <button
+        class="mobile-menu-btn"
+        @click="toggleMobileMenu"
+        ref="menuBtn"
+        aria-label="Toggle menu"
+      >
+        <i :class="`bi ${isMobileOpen ? 'bi-x-lg' : 'bi-list'}`"></i>
+      </button>
     </nav>
-  </div>
+
+    <div class="mobile-menu" :class="{ open: isMobileOpen }">
+      <a href="#redes" class="mobile-link" @click="closeMobileMenu">Inicio</a>
+      <a href="#tecnologias" class="mobile-link" @click="closeMobileMenu">Tecnologias</a>
+      <a href="#projetos" class="mobile-link" @click="closeMobileMenu">Projetos</a>
+    </div>
+  </header>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
-const navBar = ref(null);
-const btnHamb = ref(null);
-
+const header = ref(null);
+const menuBtn = ref(null);
+const isMobileOpen = ref(false);
 let lastScrollY = 0;
+let isHidden = false;
 
 const checkScroll = () => {
-  if (!navBar.value || !btnHamb.value) return;
+  if (!header.value) return;
 
-  if (window.scrollY > 200) {
-    navBar.value.classList.add("nav-hide");
-    btnHamb.value.classList.add("d-md-block");
+  const currentScrollY = window.scrollY;
+
+  if (currentScrollY > 100) {
+    if (currentScrollY > lastScrollY && !isHidden) {
+      header.value.classList.add("header-hidden");
+      isHidden = true;
+    } else if (currentScrollY < lastScrollY && isHidden) {
+      header.value.classList.remove("header-hidden");
+      isHidden = false;
+    }
   } else {
-    if (window.scrollY < 100) {
-      btnHamb.value.classList.remove("d-md-block");
-    }
-    if (window.scrollY > lastScrollY) {
-      navBar.value.classList.add("nav-hide"); // Esconde ao rolar para baixo
-    } else {
-      navBar.value.classList.remove("nav-hide"); // Mostra ao rolar para cima
-    }
+    header.value.classList.remove("header-hidden");
+    isHidden = false;
   }
-  lastScrollY = window.scrollY;
+
+  lastScrollY = currentScrollY;
 };
 
-const toggleNav = () => {
-  if (navBar.value.classList.contains("nav-hide")) {
-    navBar.value.classList.remove("nav-hide");
-  } else {
-    navBar.value.classList.add("nav-hide");
-  }
+const toggleMobileMenu = () => {
+  isMobileOpen.value = !isMobileOpen.value;
+};
+
+const closeMobileMenu = () => {
+  isMobileOpen.value = false;
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", checkScroll);
+  window.addEventListener("scroll", checkScroll, { passive: true });
 });
 
 onBeforeUnmount(() => {
@@ -104,34 +78,149 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.nav-bar-theme {
-  z-index: 9999;
-  background-color: transparent;
+.header {
   position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1rem 2rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(26, 26, 46, 0.9);
   backdrop-filter: blur(20px);
-  background-color: #ffffff33;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header-hidden {
+  transform: translateY(-100%);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
   color: white;
-  width: 70%;
-  transition: transform 0.5s ease-in-out;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  font-family: "IBM Plex Mono", monospace !important;
-  transform: translateY(-10%);
 }
 
-.nav-hide {
-  transform: translateY(-85%);
+.logo-icon {
+  font-size: 1.75rem;
+  color: var(--accent-color);
 }
 
-.nav-link {
+.logo-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.nav-link-item {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-link-item::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-color);
+  transition: width 0.3s ease;
+}
+
+.nav-link-item:hover {
+  color: white;
+}
+
+.nav-link-item:hover::after {
+  width: 100%;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
   font-size: 1.5rem;
-  color: white !important;
-  text-shadow: 0px 0px 5px rgb(0, 187, 201);
+  cursor: pointer;
+  padding: 0.5rem;
 }
 
-@media (max-width: 576px) {
-  .nav-hide {
-    transform: translateY(-93%);
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(26, 26, 46, 0.98);
+  backdrop-filter: blur(20px);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu.open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-link {
+  display: block;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: color 0.3s ease;
+}
+
+.mobile-link:last-child {
+  border-bottom: none;
+}
+
+.mobile-link:hover {
+  color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  .header {
+    padding: 1rem 1.5rem;
   }
 }
 </style>

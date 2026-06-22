@@ -3,18 +3,20 @@
     <div class="mb-5">
       <h2 class="text-center mb-4 fs-2 fw-bold section-title">Tecnologias</h2>
     </div>
-    <div class="row justify-content-center mx-1 gap-5 pt-3">
+    <div class="tech-grid">
       <div
-        class="col-md-2 col-4 d-flex justify-content-center"
         v-for="(tech, index) in techs"
         :key="index"
+        class="tech-item"
       >
-        <img
-          class="img-tech"
-          :class="`icon-tech${index}`"
-          :src="`/assets/languages/${tech.icon}`"
-          :alt="`Ícone do(a) ${tech.name}`"
-        />
+        <div class="tech-icon-wrapper">
+          <img
+            class="tech-icon"
+            :src="`/assets/languages/${tech.icon}`"
+            :alt="tech.name"
+          />
+        </div>
+        <span class="tech-name">{{ tech.name }}</span>
       </div>
     </div>
   </section>
@@ -24,11 +26,11 @@
 const techs = [
   { name: "PHP", icon: "php.png" },
   { name: "Java", icon: "java.png" },
-  { name: "Javascript", icon: "js.png" },
+  { name: "JavaScript", icon: "js.png" },
   { name: "TypeScript", icon: "ts.png" },
   { name: "Angular", icon: "Angular.png" },
   { name: "Vue", icon: "Vue.png" },
-  { name: "Mysql", icon: "mysql.png" },
+  { name: "MySQL", icon: "mysql.png" },
   { name: "PostgreSQL", icon: "postgre.png" },
   { name: "MongoDB", icon: "mongoDB.png" },
   { name: "Docker", icon: "docker.png" },
@@ -38,108 +40,93 @@ const techs = [
 </script>
 
 <style scoped>
-.img-tech {
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2rem;
+  padding: 0 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.tech-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
   cursor: pointer;
-  width: 25%;
 }
 
-.img-tech:hover {
-  animation: none;
-  transform: scale(1.09);
+.tech-icon-wrapper {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes float {
-  0% {
-    transform: translateY(0);
-    transform: translateX(0);
-  }
-
-  50% {
-    transform: translateY(-20px);
-    transform: translateX(-20);
-  }
-
-  100% {
-    transform: translateY(0);
-    transform: translateX(0);
-  }
+.tech-item:hover .tech-icon-wrapper {
+  background: rgba(0, 187, 201, 0.1);
+  border-color: rgba(0, 187, 201, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.icon-tech0 {
-  animation: float 6s ease-in-out infinite;
+.tech-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
 }
 
-.icon-tech1 {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 1s;
+.tech-item:hover .tech-icon {
+  transform: scale(1.1);
 }
 
-.icon-tech2 {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 2s;
+.tech-name {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  text-align: center;
+  transition: color 0.3s ease;
 }
 
-.icon-tech3 {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 3s;
-}
-
-.icon-tech4 {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 4s;
-}
-
-.icon-tech5 {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 2s;
-}
-
-.icon-tech6 {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 6s;
-}
-
-.icon-tech7 {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 0s;
-}
-
-.icon-tech8 {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 3s;
-}
-
-.icon-tech9 {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 6s;
-}
-
-.icon-tech9 {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 3s;
-}
-
-.icon-tech10 {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 5s;
-}
-
-.icon-tech11 {
-  animation: float 6s ease-in-out infinite;
-  animation-delay: 1s;
+.tech-item:hover .tech-name {
+  color: var(--accent-color);
 }
 
 @media (max-width: 768px) {
-  .img-tech {
-    cursor: pointer;
-    width: 50%;
+  .tech-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .tech-icon-wrapper {
+    width: 60px;
+    height: 60px;
   }
 }
 
 @media (max-width: 576px) {
-  .img-tech {
-    cursor: pointer;
-    width: 75%;
+  .tech-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .tech-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    padding: 0.75rem;
+  }
+
+  .tech-name {
+    font-size: 0.7rem;
   }
 }
 </style>
